@@ -1,11 +1,15 @@
 <?php
-//【重要】
-/**
- * DB接続のための関数をfuncs.phpに用意
- * require_onceでfuncs.phpを取得
- * 関数を使えるようにする。
- */
+//SESSIONスタート
+session_start();
+//関数を呼び出す
 require_once('funcs.php');
+//ログインチェック
+loginCheck();
+
+// 以下ログインユーザーのみ
+$user_name = $_SESSION['name'];
+$kanri_flg = $_SESSION['kanri_flg']; //0が一般で1が管理者
+
 $pdo = db_conn();
 
 //２．データ登録SQL作成
@@ -18,6 +22,8 @@ if ($status == false) {
     sql_error($status);
 } else {
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        // var_dump($result['id']);
+        // exit;
         //GETデータ送信リンク作成
         // <a>で囲う。
         $view .= '<p>';
@@ -59,6 +65,7 @@ if ($status == false) {
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.php">ブックマーク一覧</a>
                 </div>
+                <p><?= $user_name ?></p>
             </div>
         </nav>
     </header>

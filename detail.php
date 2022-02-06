@@ -13,7 +13,7 @@ $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $status = $stmt->execute();
 
 //4．データ表示
-$view = '';
+// $view = ''; 220204 20;37に消した
 
 if($status == false){
     sql_error($stmt);
